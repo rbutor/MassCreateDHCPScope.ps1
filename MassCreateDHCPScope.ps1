@@ -20,7 +20,7 @@ $domain=$line.domain
 $dnsArray = $intDNS1,$intDNS2
 $guestDNSArray = $exDNS1,$exDNS2
  
-Add-DhcpServerv4Scope -Name $scopeName -StartRange $startIP -EndRange $endIP -SubnetMask $mask -Description $desc –cn $dhcpServer
+$scopeID = (Add-DhcpServerv4Scope -Name $scopeName -StartRange $startIP -EndRange $endIP -SubnetMask $mask -Description $desc –cn $dhcpServer -PassThru).ScopeID
 #Add-DhcpServerv4ExclusionRange -ScopeID $scopeID -StartRange $excludeStart -EndRange $excludeEnd
 Set-DhcpServerv4OptionValue -ComputerName $dhcpServer -DnsServer $dnsArray -DnsDomain $domain -Router $gateway -force
 Add-DhcpServerv4FailoverScope -ComputerName $dhcpServer -Name "dhcp01-dhcp02" -ScopeID $scopeID
